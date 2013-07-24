@@ -15,7 +15,7 @@ tests_require = [
     
 ]
 
-setup(name='sprout_orm',
+setup(name='bud_orm',
       version='0.0',
       description='SPROUT ORM',
       long_description=README + '\n\n' + CHANGES,
