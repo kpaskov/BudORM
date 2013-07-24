@@ -17,7 +17,7 @@ tests_require = [
 
 setup(name='bud_orm',
       version='0.0',
-      description='SPROUT ORM',
+      description='BUD ORM',
       long_description=README + '\n\n' + CHANGES,
       author='Kelley Paskov',
       author_email='kpaskov@stanford.edu',
