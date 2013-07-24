@@ -1,3 +1,3 @@
 #SGD Website Project
 
-This project is the ORM for the old datbase schema (BUD).
+This project is the ORM for the new datbase schema (SPROUT).
