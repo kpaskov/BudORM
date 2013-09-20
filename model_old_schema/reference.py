@@ -8,12 +8,14 @@ Reference module of the database schema.
 '''
 from model_old_schema import Base, EqualityByIDMixin, UniqueMixin, SCHEMA
 from model_old_schema.feature import Feature
+from model_old_schema.general import Dbxref, Url
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String, Date
-       
+    
+    
 class Reference(Base, EqualityByIDMixin, UniqueMixin):
     __tablename__ = 'reference'
 
@@ -107,6 +109,27 @@ class Journal(Base, EqualityByIDMixin, UniqueMixin):
     def __repr__(self):
         data = self.full_name, self.publisher
         return 'Journal(full_name=%s, publisher=%s)' % data
+    
+class DbxrefRef(Base, EqualityByIDMixin):
+    __tablename__ = 'dbxref_ref'
+    __table_args__ = {'schema': SCHEMA, 'extend_existing':True}
+    
+    id = Column('dbxref_ref_no', Integer, primary_key = True)
+    dbxref_id = Column('dbxref_no', Integer, ForeignKey('bud.dbxref.dbxref_no'))
+    reference_id = Column('reference_no', Integer, ForeignKey(Reference.id))
+    
+    dbxref = relationship(Dbxref, uselist=False, lazy='joined')
+    reference = relationship(Reference, uselist=False, backref='dbxrefrefs')
+    
+class Ref_URL(Base):
+    __tablename__ = 'ref_url'
+    
+    id = Column('ref_url_no', Integer, primary_key = True)
+    reference_id = Column('reference_no', Integer, ForeignKey(Reference.id))
+    url_id = Column('url_no', Integer, ForeignKey(Url.id))
+    
+    url = relationship(Url)
+    reference = relationship(Reference)
     
 class RefTemp(Base, EqualityByIDMixin, UniqueMixin):
     __tablename__ = 'ref_temp'
